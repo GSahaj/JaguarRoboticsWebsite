@@ -1,5 +1,6 @@
 import './Navbar.css';
 import logo from '../../../../4015Website/4015Website/src/assets/Team4015logo.png';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     return(
@@ -8,14 +9,13 @@ function Navbar() {
                 <div className="logo">
                     <img src={logo} alt="Company logo" />
                 </div>
-                <div className="nav-spacer"></div> {/* New spacer element */}
                 <ul className="nav-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Student</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Sponsor</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/aboutus">About</Link></li>
+                    <li><Link to="/student">Student</Link></li>
+                    <li><Link to="/gallery">Gallery</Link></li>
+                    <li><Link to="/sponsor">Sponsor</Link></li>
+                    <li><Link to="/contact">Contact</Link></li>
                 </ul>
             </nav>
             <div className="purple-1"></div>

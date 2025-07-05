@@ -7,10 +7,10 @@
 }
 .navbar {
     display: flex;
-    justify-content: space-between; /* Changed from flex-start to space-between */
+    justify-content: space-between;  /* Push logo left, nav links right */
     align-items: center;
     background-color: black;
-    padding: 10px 20px;
+    padding: 10px 40px;              /* More space left/right */
     width: 100%;
     height: 100px;
     position: fixed;
@@ -19,9 +19,9 @@
     z-index: 1000;
 }
 
-/* New spacer element - pushes nav links to the right */
 .nav-spacer {
-    flex-grow: 1;
+    flex-grow: 0;
+    width: 650px; /* or any small spacer */
 }
 
 .logo img {

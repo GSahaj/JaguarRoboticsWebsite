@@ -1,0 +1,194 @@
+/* Reset and full-screen setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Norwester-Regular';
+    src: url('../fonts/Norwester-Regular.woff2') format('woff2'),
+    url('../fonts/Norwester-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.home-screen {
+    background-color: #5a2572; /* soft lavender-purple */
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 50px; /* some spacing below */
+}
+
+.gallery-container {
+    position: relative;
+    width: 100vw;           /* full viewport width */
+    max-width: none;        /* remove width cap */
+    height: 700px;          /* keep or adjust as needed */
+    margin: 160px 0 0 0;    /* remove auto horizontal centering */
+    overflow: hidden;
+    border-radius: 0;       /* no rounding */
+    box-shadow: none;       /* optional: remove shadow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5; /* optional */
+}
+
+/* Slide in from top */
+.slide-in {
+    animation: slideDown 0.8s ease forwards;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.team-name {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Norwester', sans-serif;
+    font-size: 6rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+    z-index: 20;
+    pointer-events: none;
+    letter-spacing: 3px;
+}
+
+
+/* Sync scale & fade in animation */
+@keyframes syncIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.6);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateX(-50%) scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
+}
+
+/* White translucent overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(100,30,1500,0.3);
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+/* Navigation arrows */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    font-size: 2.5rem;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.left-arrow {
+    left: 15px;
+}
+
+.right-arrow {
+    right: 15px;
+}
+
+.button-group {
+    position: absolute;
+    top: 250px; /* below team name */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 25px;
+    z-index: 25;
+}
+
+.btn-outline {
+    border: 2px solid white;
+    color: white;
+    padding: 10px 28px;
+    font-family: 'Norwester', sans-serif;
+    font-size: 1.4rem;
+    text-decoration: none;
+    background-color: transparent;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.btn-outline:hover {
+    background-color: rgba(98, 2, 114, 0.7); /* light purple with opacity */
+    color: white;
+}
+
+.about-section {
+    width: 80%;
+    margin: 80px auto 100px;
+    text-align: center;
+    color: white;
+    font-family: 'Norwester', sans-serif;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-out;
+}
+
+.about-section h2 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
+
+/* Triggered class when in view */
+.about-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
