@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'Norwester';
+    src: url('../fonts/Norwester-Regular.woff2') format('woff2'),
+    url('../fonts/Norwester-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Changed from flex-start to space-between */
+    align-items: center;
+    background-color: black;
+    padding: 10px 20px;
+    width: 100%;
+    height: 100px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* New spacer element - pushes nav links to the right */
+.nav-spacer {
+    flex-grow: 1;
+}
+
+.logo img {
+    height: 100px;
+    width: auto;
+    margin-right: 20px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 10px;
+    position: relative;
+}
+
+.nav-links a {
+    font-family: 'Norwester', sans-serif;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #9370DB;
+}
+
+.nav-links li::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 20px;
+    background-color: white;
+}
+
+.nav-links li:last-child::after {
+    content: none;
+}
+
+.purple-1 {
+    width: 100%;
+    height: 30px;
+    background-color: #420255;
+    position: fixed;
+    top: 130px;
+    left: 0;
+    z-index: 999;
+}
+
+.purple-2 {
+    width: 100%;
+    height: 30px;
+    background-color: #320141;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    z-index: 999;
+}
