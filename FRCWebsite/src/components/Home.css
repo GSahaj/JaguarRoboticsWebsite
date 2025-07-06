@@ -165,20 +165,78 @@
     color: white;
 }
 
+/* Container for the about section + background */
+/* Container for about section + pattern */
+.about-container {
+    position: relative;
+    width: 100%;
+    margin: 80px 0;
+    min-height: 200px; /* Space for 3 rows */
+}
+
+/* Background pattern */
+.jags-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0px; /* Spacing between rows */
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Each JAGS line */
+.jags-line {
+    width: 200%; /* Double width for seamless looping */
+    white-space: nowrap;
+    font-family: 'Norwester', sans-serif;
+    font-size: 4.5rem; /* Larger text */
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.1); /* Slightly more visible */
+    animation: scroll-horizontal 80s linear infinite;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Better spacing */
+}
+
+/* Alternate animation directions */
+.jags-line:nth-child(even) {
+    animation-direction: reverse;
+}
+
+/* Seamless scroll animation */
+/*@keyframes scroll-horizontal {*/
+/*    0% { transform: translateX(0); }*/
+/*    100% { transform: translateX(-50%); } !* Matches the 200% width *!*/
+/*}*/
+
+/* Ensure about-section stays on top */
 .about-section {
-    width: 80%;
-    margin: 80px auto 100px;
+    position: relative;
+    z-index: 2;
+    /* Your existing styles plus the slightly darker bg we added earlier */
+    width: 60%;
+    margin: 0 auto;
+    padding: 50px;
     text-align: center;
     color: white;
     font-family: 'Norwester', sans-serif;
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.6s ease-out;
+    background-color: rgba(80, 30, 100, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
+/* Keep your existing about-section text styles */
 .about-section h2 {
+    position: relative;
+    z-index: 2;
     font-size: 4rem;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .about-section p {
@@ -187,7 +245,6 @@
     margin-bottom: 12px;
 }
 
-/* Triggered class when in view */
 .about-section.visible {
     opacity: 1;
     transform: translateY(0);

@@ -78,7 +78,7 @@ function Home() {
                     {/* Buttons container */}
                     <div className="button-group">
                         <Link to="/contact" className="btn-outline">
-                            Join Us
+                            Support Us
                         </Link>
                         <Link to="/aboutus" className="btn-outline">
                             About Us
@@ -102,10 +102,23 @@ function Home() {
                     </button>
                 </div>
             </div>
-            <div className="about-section">
-                <h2>About Team 4015</h2>
-                <p>This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.This is a place to type.</p>
+            <div className="about-container">
+                {/* Background pattern with 3-4 rows */}
+                <div className="jags-pattern">
+                    {[...Array(4)].map((_, i) => (
+                        <div key={i} className="jags-line">
+                            {"JAGS ".repeat(20)} {/* Generates 20 "JAGS" per row */}
+                        </div>
+                    ))}
+                </div>
+
+                {/* Your about-section */}
+                <div className="about-section">
+                    <h2>About Team 4015</h2>
+                    <p>This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text.This is where you put text. </p>
+                </div>
             </div>
+
         </div>
     );
 }
