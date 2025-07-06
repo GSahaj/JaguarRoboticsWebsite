@@ -19,6 +19,7 @@
     padding-bottom: 50px;
 }
 
+/* Gallery Container */
 .gallery-container {
     position: relative;
     width: 100vw;
@@ -65,23 +66,6 @@
     letter-spacing: 3px;
 }
 
-
-@keyframes syncIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-50%) scale(0.6);
-    }
-    50% {
-        opacity: 0.7;
-        transform: translateX(-50%) scale(1.1);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(-50%) scale(1);
-    }
-}
-
-
 .image-wrapper {
     position: relative;
     width: 100%;
@@ -102,7 +86,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(100,30,1500,0.3);
+    background-color: rgba(100,30,150,0.3);
     border-radius: 10px;
     pointer-events: none;
 }
@@ -133,7 +117,7 @@
 
 .button-group {
     position: absolute;
-    top: 250px; /* below team name */
+    top: 250px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -160,10 +144,11 @@
     color: white;
 }
 
+/* About Section */
 .about-container {
     position: relative;
     width: 100%;
-    margin: 30px 0 50px;
+    margin: 80px 0;
     min-height: 400px;
 }
 
@@ -174,8 +159,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap:0;
-    padding-top: 20px;
+    gap: 0;
+    padding-top: 50px;
     z-index: 1;
     overflow: hidden;
 }
@@ -184,7 +169,7 @@
     width: 200%;
     white-space: nowrap;
     font-family: 'Norwester', sans-serif;
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.1);
     animation: scroll-horizontal 80s linear infinite;
@@ -199,10 +184,9 @@
 .about-section {
     position: relative;
     z-index: 2;
-    margin-top: -20px;
     width: 60%;
     margin: 0 auto;
-    padding: 50px;
+    padding: 60px;
     text-align: center;
     color: white;
     font-family: 'Norwester', sans-serif;
@@ -215,8 +199,6 @@
 }
 
 .about-section h2 {
-    position: relative;
-    z-index: 2;
     font-size: 4rem;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -231,4 +213,160 @@
 .about-section.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.floating-button {
+    position: absolute;
+    font-family: 'Norwester', sans-serif;
+    font-size: 1.2rem;
+    color: white;
+    text-decoration: none;
+    padding: 8px 25px;
+    border: 2px solid white;
+    border-radius: 10px;
+    z-index: 20;
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+
+.floating-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.about-button {
+    top: -15px;
+    right: 40px;
+}
+
+.gallery-section {
+    position: relative;
+    background-color: #000;
+    padding: 80px 20px 40px;
+    margin-top: 30px;
+}
+
+.gallery-button {
+    top: 20px;
+    right: 40px;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.grid-item {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.grid-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(100, 30, 150, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.grid-item:hover::before {
+    opacity: 1;
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: scale(1.02);
+}
+
+.grid-item:hover img {
+    opacity: 0.9;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.image-modal img {
+    max-width: 80%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease-out;
+    z-index: 1001;
+    cursor: default;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 1200px) {
+    .image-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .team-name {
+        font-size: 5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .image-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .team-name {
+        font-size: 4rem;
+    }
+    .about-section {
+        width: 80%;
+        padding: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+    .team-name {
+        font-size: 3rem;
+    }
+    .button-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .floating-button {
+        font-size: 1rem;
+        padding: 6px 15px;
+    }
 }
