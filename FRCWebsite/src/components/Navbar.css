@@ -7,10 +7,10 @@
 }
 .navbar {
     display: flex;
-    justify-content: space-between;  /* Push logo left, nav links right */
+    justify-content: space-between;
     align-items: center;
     background-color: black;
-    padding: 10px 40px;              /* More space left/right */
+    padding: 10px 40px;
     width: 100%;
     height: 100px;
     position: fixed;

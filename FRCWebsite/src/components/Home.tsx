@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-// Import your images or use public folder paths
 import Img1 from '../assets/Team_Picture.JPG';
 import Img2 from '../assets/Aura_Black4015.png';
 import Img3 from '../assets/Match_2022.png';
@@ -16,9 +15,8 @@ function Home() {
     const [displayedText, setDisplayedText] = useState('');
     const [slideIn, setSlideIn] = useState(false);
 
-    // Slide in + typing effect on mount
     useEffect(() => {
-        setSlideIn(true); // Trigger slide-down animation
+        setSlideIn(true);
 
         let currentChar = 0;
         const typingInterval = setInterval(() => {
@@ -27,12 +25,11 @@ function Home() {
             if (currentChar === teamName.length) {
                 clearInterval(typingInterval);
             }
-        }, 150); // ms per letter
+        }, 150);
 
         return () => clearInterval(typingInterval);
     }, []);
 
-    // Auto change every 10 seconds
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -103,11 +100,10 @@ function Home() {
                 </div>
             </div>
             <div className="about-container">
-                {/* Background pattern with 3-4 rows */}
                 <div className="jags-pattern">
                     {[...Array(4)].map((_, i) => (
                         <div key={i} className="jags-line">
-                            {"JAGS ".repeat(20)} {/* Generates 20 "JAGS" per row */}
+                            {"JAGS ".repeat(20)}
                         </div>
                     ))}
                 </div>
