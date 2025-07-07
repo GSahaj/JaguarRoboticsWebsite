@@ -175,6 +175,53 @@ function Home() {
             if (typingElement) observer.unobserve(typingElement);
         };
     }, []);
+
+    useEffect(() => {
+        const socialText = "Follow and experience our robotics journey...";
+        const typingElement = document.querySelector('.typing-text');
+        const logos = document.querySelectorAll('.social-logo');
+        const learnMoreBtn = document.querySelector('.learn-more-button');
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Typing animation
+                        let currentChar = 0;
+                        const typingInterval = setInterval(() => {
+                            if (typingElement) {
+                                typingElement.textContent = socialText.slice(0, currentChar + 1);
+                            }
+                            currentChar++;
+                            if (currentChar === socialText.length) {
+                                clearInterval(typingInterval);
+                                // Logo animation after typing completes
+                                setTimeout(() => {
+                                    logos.forEach(logo => {
+                                        logo.classList.add('visible');
+                                    });
+                                    // Button animation after logos
+                                    setTimeout(() => {
+                                        if (learnMoreBtn) learnMoreBtn.classList.add('visible');
+                                    }, 500);
+                                }, 300);
+                            }
+                        }, 150);
+
+                        return () => clearInterval(typingInterval);
+                    }
+                });
+            },
+            { threshold: 0.3 }
+        );
+
+        if (typingElement) observer.observe(typingElement);
+
+        return () => {
+            if (typingElement) observer.unobserve(typingElement);
+        };
+    }, []);
+
     return (
         <div className="home-screen">
             {/* Hero Slideshow */}
@@ -262,7 +309,7 @@ function Home() {
                     <div className="video-container">
                         <div className="video-wrapper">
                             <iframe
-                                src="https://www.youtube.com/embed/Xi4naxTUPnY?start=994"
+                                src="https://www.youtube.com/embed/Xi4naxTUPnY?start=0"
                                 title="2020 Season Highlights"
                                 allowFullScreen
                             ></iframe>
@@ -270,7 +317,7 @@ function Home() {
 
                         <div className="video-wrapper">
                             <iframe
-                                src="https://www.youtube.com/embed/prOTfw1wLH8?start=35"
+                                src="https://www.youtube.com/embed/prOTfw1wLH8?start=0"
                                 title="2022 Season Highlights"
                                 allowFullScreen
                             ></iframe>
@@ -300,6 +347,8 @@ function Home() {
                             <img src={youtube} alt="YouTube" className="social-logo" />
                         </a>
                     </div>
+
+                    <Link to="/aboutus" className="learn-more-button">Learn More</Link>
                 </div>
             </div>
 
