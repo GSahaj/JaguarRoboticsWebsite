@@ -14,6 +14,11 @@ import Img9 from '../assets/mantis.png';
 import Img10 from '../assets/teampeople.png';
 import Img12 from '../assets/teampit2.png';
 import Img13 from '../assets/buildingrobot.png';
+import Img14 from '../assets/teamcap.png';
+import instagram from '../assets/instagram_icon.png';
+import X from '../assets/X_logo.png';
+import youtube from '../assets/youtube_logo.png';
+
 
 const images = [Img1, Img2, Img3, Img4];
 const teamName = "4015 Jaguar Robotics";
@@ -22,6 +27,19 @@ function Home() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [displayedText, setDisplayedText] = useState('');
     const [slideIn, setSlideIn] = useState(false);
+    const [modalImage, setModalImage] = useState<string | null>(null);
+    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number | null>(null);
+
+    const galleryImages = [
+        { id: 1, src: Img5, alt: "2022 Moving Robot" },
+        { id: 2, src: Img6, alt: "Backstage Preparation" },
+        { id: 3, src: Img7, alt: "Drive Control Station" },
+        { id: 4, src: Img8, alt: "Team Member Jason" },
+        { id: 5, src: Img9, alt: "Mantis Robot" },
+        { id: 6, src: Img10, alt: "Team Working Together" },
+        { id: 7, src: Img12, alt: "Pit Crew Working" },
+        { id: 8, src: Img13, alt: "Building Robot" }
+    ];
 
     useEffect(() => {
         setSlideIn(true);
@@ -56,36 +74,107 @@ function Home() {
         return () => { if (section) observer.unobserve(section); };
     }, []);
 
-    const [modalImage, setModalImage] = useState<string | null>(null);
-    const galleryImages = [
-        { id: 1, src: Img5, alt: "2022 Moving Robot" },
-        { id: 2, src: Img6, alt: "Backstage Preparation" },
-        { id: 3, src: Img7, alt: "Drive Control Station" },
-        { id: 4, src: Img8, alt: "Team Member Jason" },
-        { id: 5, src: Img9, alt: "Mantis Robot" },
-        { id: 6, src: Img10, alt: "Team Working Together" },
-        { id: 7, src: Img12, alt: "Pit Crew Working" },
-        { id: 8, src: Img13, alt: "Building Robot" }
-    ];
-
-    const openModal = (imgSrc: string) => {
+    const openModal = (imgSrc: string, index: number) => {
         setModalImage(imgSrc);
+        setCurrentGalleryIndex(index);
         document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setModalImage(null);
+        setCurrentGalleryIndex(null);
         document.body.style.overflow = 'auto';
+    };
+
+    const goToNextImage = () => {
+        if (currentGalleryIndex === null) return;
+        const nextIndex = (currentGalleryIndex + 1) % galleryImages.length;
+        setModalImage(galleryImages[nextIndex].src);
+        setCurrentGalleryIndex(nextIndex);
+    };
+
+    const goToPrevImage = () => {
+        if (currentGalleryIndex === null) return;
+        const prevIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+        setModalImage(galleryImages[prevIndex].src);
+        setCurrentGalleryIndex(prevIndex);
     };
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && modalImage) closeModal();
+            if (e.key === 'ArrowRight' && modalImage) goToNextImage();
+            if (e.key === 'ArrowLeft' && modalImage) goToPrevImage();
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [modalImage]);
+    }, [modalImage, currentGalleryIndex]);
 
+    useEffect(() => {
+        const header = document.querySelector('.highlights-header');
+        const observer = new IntersectionObserver(
+            (entries) => entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            }),
+            { threshold: 0.1 }
+        );
+        if (header) observer.observe(header);
+        return () => { if (header) observer.unobserve(header); };
+    }, []);
+
+    useEffect(() => {
+        const section = document.querySelector('.highlights-section');
+        const observer = new IntersectionObserver(
+            (entries) => entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            }),
+            { threshold: 0.3 }
+        );
+        if (section) observer.observe(section);
+        return () => { if (section) observer.unobserve(section); };
+    }, []);
+
+    // Add this with your other useEffect hooks
+    useEffect(() => {
+        const socialText = "Follow and experience our robotics journey...";
+        const typingElement = document.querySelector('.typing-text');
+        const logos = document.querySelectorAll('.social-logo');
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Typing animation
+                        let currentChar = 0;
+                        const typingInterval = setInterval(() => {
+                            if (typingElement) {
+                                typingElement.textContent = socialText.slice(0, currentChar + 1);
+                            }
+                            currentChar++;
+                            if (currentChar === socialText.length) {
+                                clearInterval(typingInterval);
+                                // Logo animation after typing completes
+                                setTimeout(() => {
+                                    logos.forEach(logo => {
+                                        logo.classList.add('visible');
+                                    });
+                                }, 500);
+                            }
+                        }, 150);
+
+                        return () => clearInterval(typingInterval);
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+
+        if (typingElement) observer.observe(typingElement);
+
+        return () => {
+            if (typingElement) observer.unobserve(typingElement);
+        };
+    }, []);
     return (
         <div className="home-screen">
             {/* Hero Slideshow */}
@@ -131,8 +220,8 @@ function Home() {
                 </Link>
 
                 <div className="image-grid">
-                    {galleryImages.map((image) => (
-                        <div key={image.id} className="grid-item" onClick={() => openModal(image.src)}>
+                    {galleryImages.map((image, index) => (
+                        <div key={image.id} className="grid-item" onClick={() => openModal(image.src, index)}>
                             <img src={image.src} alt={image.alt} loading="lazy" />
                         </div>
                     ))}
@@ -141,9 +230,79 @@ function Home() {
 
             {modalImage && (
                 <div className="image-modal" onClick={closeModal}>
-                    <img src={modalImage} alt="Expanded view" onClick={e => e.stopPropagation()} />
+                    <button className="modal-nav-button left" onClick={(e) => {e.stopPropagation();goToPrevImage();}} aria-label="Previous image">
+                        &#10094;
+                    </button>
+
+                    <img
+                        src={modalImage}
+                        alt="Expanded view"
+                        onClick={e => e.stopPropagation()}
+                    />
+
+                    <button className="modal-nav-button right" onClick={(e) => {e.stopPropagation();goToNextImage();}} aria-label="Next image">
+                        &#10095;
+                    </button>
+
+                    <button className="modal-close-button" onClick={closeModal} aria-label="Close image">
+                        &times;
+                    </button>
                 </div>
             )}
+            <div className="highlights-container">
+                <div className="jags-pattern-highlights">
+                    {[...Array(7)].map((_, i) => (
+                        <div key={`hl-${i}`} className="jags-line">{"JAGS ".repeat(20)}</div>
+                    ))}
+                </div>
+                <div className="highlights-section">
+                    <h2>Season Highlights</h2>
+                    <p>Relive our most exciting moments from the 2020 and 2022 competition seasons</p>
+
+                    <div className="video-container">
+                        <div className="video-wrapper">
+                            <iframe
+                                src="https://www.youtube.com/embed/Xi4naxTUPnY?start=994"
+                                title="2020 Season Highlights"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+
+                        <div className="video-wrapper">
+                            <iframe
+                                src="https://www.youtube.com/embed/prOTfw1wLH8?start=35"
+                                title="2022 Season Highlights"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="social-section">
+                <div className="social-background">
+                    <img src={Img14} alt="Team background" className="social-bg-image" />
+                    <div className="social-overlay" />
+                </div>
+
+                <div className="social-content">
+                    <div className="social-text">
+                        <h2 className="typing-text"></h2>
+                    </div>
+
+                    <div className="social-logos">
+                        <a href="https://www.instagram.com/frc4015jags/" target="_blank" rel="noopener noreferrer">
+                            <img src={instagram} alt="Instagram" className="social-logo" />
+                        </a>
+                        <a href="https://x.com/frc4015" target="_blank" rel="noopener noreferrer">
+                            <img src={X} alt="Twitter/X" className="social-logo" />
+                        </a>
+                        <a href="https://www.youtube.com/@sjssrobotics3292" target="_blank" rel="noopener noreferrer">
+                            <img src={youtube} alt="YouTube" className="social-logo" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }
